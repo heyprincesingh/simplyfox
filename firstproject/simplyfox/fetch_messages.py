@@ -7,6 +7,18 @@ from .slack_utils.slack_get_functions import (
 from .generate_ai_summary import generate_ai_summary
 from .day_unix import convert_date_to_unix, convert_unix_to_date
 
+def split_text(text, max_length=2900):
+    """Splits text into chunks that do not exceed the specified max length."""
+    chunks = []
+    while len(text) > max_length:
+        split_at = text.rfind('\n', 0, max_length)
+        if split_at == -1:
+            split_at = max_length
+        chunks.append(text[:split_at])
+        text = text[split_at:].lstrip()
+    chunks.append(text)
+    return chunks
+
 
 def format_summary_data(data):
     summary_update_blocks = [
@@ -19,23 +31,37 @@ def format_summary_data(data):
         },
         {"type": "divider"},
     ]
+    
     for channel_id, summary in data.items():
-        summary_update_blocks.extend(
-            (
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f"💬 In *<#{channel_id}>* channel, you had these conversations:",
-                    },
-                },
-                {
-                    "type": "section",
-                    "text": {"type": "mrkdwn", "text": summary},
-                },
-                {"type": "divider"},
-            )
-        )
+        summary_chunks = split_text(summary)
+        for i, chunk in enumerate(summary_chunks):
+            if i == 0:
+                summary_update_blocks.extend(
+                    [
+                        {
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": f"💬 In *<#{channel_id}>* channel, you had these conversations:",
+                            },
+                        },
+                        {
+                            "type": "section",
+                            "text": {"type": "mrkdwn", "text": chunk},
+                        },
+                    ]
+                )
+            else:
+                summary_update_blocks.extend(
+                    [
+                        {
+                            "type": "section",
+                            "text": {"type": "mrkdwn", "text": chunk},
+                        },
+                    ]
+                )
+        summary_update_blocks.append({"type": "divider"})
+    
     return summary_update_blocks
 
 

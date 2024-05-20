@@ -1,3 +1,4 @@
+from simplyfox.slack_utils.slack_block_functions import remove_save_me_and_text_input_block
 from simplyfox.slack_utils.slack_post_message import post_slack_block_message
 from simplyfox.slack_utils.slack_view_publish import view_publish
 from .slack_summary_text import handle_summary_creation, handle_summary_query
@@ -48,8 +49,7 @@ def button_get_summary(client, bot_token, user_id, data):
 
 def button_save_summary(client, user_id, data):
     if "view" in data and "blocks" in data["view"]:
-        data["view"]["blocks"] = data["view"]["blocks"][:-2]
-
+        data["view"]["blocks"] = remove_save_me_and_text_input_block(data["view"]["blocks"])
         post_slack_block_message(
             client=client, receiver_id=user_id, block_message=data["view"]["blocks"]
         )

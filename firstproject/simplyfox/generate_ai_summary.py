@@ -51,14 +51,14 @@ def generate_ai_summary(conversationData):
 
           Summarization:
           For each identified use case:
-
+          Each topic to summarize strictly under 80 words.
           Analyze the conversation data to extract key points and highlights relevant to the specific use case.
           Generate a concise summary paragraph that captures the essence of the discussions related to the use case.
           Ensure that the summary provides enough context for readers to understand the main topics and discussions covered in the channel.
           If multiple topics or subtopics are discussed within the use case, organize the summary paragraph accordingly to maintain clarity and coherence.
 
-          Keyword Extraction:
-          After summarizing, provide a list of keywords extracted from the conversation data that represent the main themes and topics discussed within the channel at the end only. These keywords will help readers quickly identify the key points covered. The conversation data={conversationData}
+          Keyword topics Extraction:
+          After summarizing, provide a list of key-topics extracted from the conversation data that represent the main themes and topics discussed within the channel at the end only. This will help readers quickly identify the key points covered. The conversation data={conversationData}
           """
     )
 
@@ -82,7 +82,7 @@ def generate_ai_query_answer(conversationData, user_query):
         "temperature": 0.0,
         "top_p": 1,
         "top_k": 0,
-        "max_output_tokens": 100,
+        "max_output_tokens": 400,
     }
 
     safety_settings = [
@@ -110,7 +110,10 @@ def generate_ai_query_answer(conversationData, user_query):
     convo = model.start_chat(history=[])
 
     convo.send_message(
-        f"Go through the conversation data closely and give the final answer for the question asked under 50 words. The conversation data={conversationData} and the question={user_query}. Here in the conversation data, 'me' as a user is defined for the user asking the query, replace it with 'you'"
+        f"""Go through the conversation data {conversationData} closely and give the final answer for the question: {user_query}.
+        1. keep the answer strictly under 50 word counts. 
+        2. Answer should only be from the conversation data given above.
+        3. Here in the conversation data, 'me' as a user is defined for the user asking the query, replace it with 'you'"""
     )
 
     return (
@@ -118,4 +121,6 @@ def generate_ai_query_answer(conversationData, user_query):
         .replace("\n*", "\n *")
         .replace("*\n", "* \n")
         .strip()
+        if convo.last.text
+        else ""
     )

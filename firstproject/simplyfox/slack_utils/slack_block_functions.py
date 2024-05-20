@@ -117,3 +117,22 @@ def replace_last_block_with_loading(blocks):
 
 def block_exists(blocks, new_block):
     return any(block == new_block for block in blocks)
+
+
+def remove_save_me_and_text_input_block(blocks):
+    filtered_blocks = []
+
+    for block in blocks:
+        if block.get("type") == "actions":
+            elements = block.get("elements", [])
+            if any(el.get("type") == "button" and el.get("text", {}).get("text") == ":envelope_with_arrow: Save me" for el in elements):
+                continue
+            
+        if block.get("type") == "input":
+            element = block.get("element", {})
+            if element.get("type") == "plain_text_input":
+                continue
+        
+        filtered_blocks.append(block)
+    
+    return filtered_blocks

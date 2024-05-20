@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Ticket Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+    }
+    .form-box {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-box input[type="text"],
+    .form-box input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .form-box textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        resize: vertical; /* Allow vertical resizing */
+    }
+    .form-box input[type="submit"] {
+        background-color: orange;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div class="form-box">
+    <form id="ticketForm" action="">
+        <textarea name="issue" id="issue" rows="3" placeholder="Enter the issue"></textarea>
+        <input name="userID" id="slackUserID" type="text" placeholder="Enter your Slack userID">
+        <input type="submit" title="Create Ticket" id="createTicketButton" value="Create Ticket">
+    </form>
+</div>
+
+<script>
+    document.getElementById('ticketForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var issue = document.getElementById('issue').value;
+        var slackUserID = document.getElementById('slackUserID').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'createtoken?issue=' + encodeURIComponent(issue) + '&userID=' + encodeURIComponent(slackUserID), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    alert('Ticket created successfully!');
+                } else {
+                    alert('Failed to create ticket. Please try again.');
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
+</body>
+</html>

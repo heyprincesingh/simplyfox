@@ -43,11 +43,18 @@ def update_for_summaryBox(block):
         "elements": [
             {
                 "type": "button",
-                "text": {"type": "plain_text", "text": "📩 Save me", "emoji": True},
+                "text": {"type": "plain_text", "text": "📩   Save me"},
                 "style": "primary",
                 "value": "saveSummary",
                 "action_id": "saveSummary",
-            }
+            },
+            {
+                "type": "button",
+                "text": {"type": "plain_text", "text": "📨   Mail me"},
+                "style": "danger",
+                "value": "mailSummary",
+                "action_id": "mailSummary",
+            },
         ],
     }
 
@@ -77,9 +84,7 @@ def update_for_query_answers(blocks, query_answer):
         "text": {"type": "mrkdwn", "text": query_answer},
     }
     blocks[-1] = new_query_answer_block
-    divider_block = {
-        "type": "divider"
-    }
+    divider_block = {"type": "divider"}
     blocks.append(divider_block)
     new_block = {
         "dispatch_action": True,
@@ -96,6 +101,7 @@ def update_for_query_answers(blocks, query_answer):
         blocks.append(new_block)
     return blocks
 
+
 def replace_last_block_with_loading(blocks):
     loading_block = {
         "type": "context",
@@ -105,10 +111,7 @@ def replace_last_block_with_loading(blocks):
                 "image_url": "https://media.tenor.com/dHAJxtIpUCoAAAAi/loading-animation.gif",
                 "alt_text": "Loading...",
             },
-            {
-                "type": "plain_text",
-                "text": "Answer for your query is on the way!"
-            },
+            {"type": "plain_text", "text": "Answer for your query is on the way!"},
         ],
     }
     blocks[-1] = loading_block
@@ -125,14 +128,18 @@ def remove_save_me_and_text_input_block(blocks):
     for block in blocks:
         if block.get("type") == "actions":
             elements = block.get("elements", [])
-            if any(el.get("type") == "button" and el.get("text", {}).get("text") == ":envelope_with_arrow: Save me" for el in elements):
+            if any(
+                el.get("type") == "button"
+                and el.get("text", {}).get("text") == "📩 Save me"
+                for el in elements
+            ):
                 continue
-            
+
         if block.get("type") == "input":
             element = block.get("element", {})
             if element.get("type") == "plain_text_input":
                 continue
-        
+
         filtered_blocks.append(block)
-    
+
     return filtered_blocks

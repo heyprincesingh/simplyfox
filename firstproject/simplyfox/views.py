@@ -1,7 +1,7 @@
 from simplyfox import shared_data
 from .slack_utils.slack_actions import (
-    button_days_selected,
     button_get_summary,
+    button_mail_summary,
     button_save_summary,
     fetch_user_query,
 )
@@ -25,22 +25,9 @@ def user_interaction(request):
         payload = unquote_plus(request.body.decode("utf-8"))
         json_data = json.loads(payload.split("=")[1])
         user_id = json_data.get("user")["id"]
-
         if "actions" in json_data:
-            # if "actions" is "daysSelected" in json_data
-            if any(
-                (
-                    action.get("action_id") == "daysSelect"
-                    for action in json_data.get("actions")
-                )
-            ):
-                button_days_selected(
-                    client=client, bot_token=bot_token, user_id=user_id, data=json_data
-                )
-                return HttpResponse(status=200)
-
             # if "actions" is "getSummary" in json_data
-            elif any(
+            if any(
                 (
                     action.get("action_id") == "buttonGetSummary"
                     for action in json_data.get("actions")
@@ -50,7 +37,7 @@ def user_interaction(request):
                     client=client, bot_token=bot_token, user_id=user_id, data=json_data
                 )
 
-            # if "actions" is "saveSummary" in json_data
+            # if "actions" is "saveSummary/mailSummary" in json_data
             elif any(
                 (
                     action.get("action_id") == "saveSummary"
@@ -59,6 +46,14 @@ def user_interaction(request):
             ):
                 button_save_summary(client=client, user_id=user_id, data=json_data)
 
+            elif any(
+                (
+                    action.get("action_id") == "mailSummary"
+                    for action in json_data.get("actions")
+                )
+            ):
+                button_mail_summary(client=client, user_id=user_id, data=json_data)
+            
             # if "actions" is "questionAskedTextBox" in json_data
             elif any(
                 (

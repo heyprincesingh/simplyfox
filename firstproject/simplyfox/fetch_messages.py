@@ -1,11 +1,12 @@
 from simplyfox import shared_data
+import json
 from .slack_utils.slack_get_functions import (
     get_channel_conversation,
     get_thread_conversations,
     get_user_name,
 )
-from .generate_ai_summary import generate_ai_summary
-from .day_unix import convert_date_to_unix, convert_unix_to_date
+from .generate_ai_summary import generate_ai_query_answer, generate_ai_summary
+from .day_functions import convert_date_to_unix, convert_unix_to_date
 
 def split_text(text, max_length=2900):
     """Splits text into chunks that do not exceed the specified max length."""
@@ -66,7 +67,7 @@ def format_summary_data(data):
 
 
 def fetch_messages_thread_replies(
-    client, bot_token, user_id, channels_list, selected_days
+    client, bot_token, user_id, channels_list, start_date, end_date, query_asked
 ):
     user_names_list = {}
     formatted_messages = {}
@@ -77,7 +78,8 @@ def fetch_messages_thread_replies(
         conversations = get_channel_conversation(
             client=client,
             channel_id=channel_id,
-            unix_days=convert_date_to_unix(selected_days),
+            start_date=convert_date_to_unix(start_date),
+            end_date=convert_date_to_unix(end_date)
         )
         messages = conversations["messages"]
 
@@ -137,11 +139,15 @@ def fetch_messages_thread_replies(
         formatted_channel_messages.reverse()
         
         shared_data.conversation_data[user_id] = formatted_channel_messages
-        summarizedChannelMessages = (
-            generate_ai_summary(formatted_channel_messages)
-            if formatted_channel_messages
-            else "No conversations found till selected date in the channel!"
-        )
+        
+        if formatted_channel_messages:
+            if query_asked:
+                summarizedChannelMessages = generate_ai_query_answer(conversationData=formatted_channel_messages, user_query=query_asked)
+            else:
+                summarizedChannelMessages = generate_ai_summary(formatted_channel_messages)
+        else:
+            summarizedChannelMessages = "No conversations found till selected date in the channel!"
+
         formatted_messages[channel_id] = summarizedChannelMessages
 
     return format_summary_data(formatted_messages)

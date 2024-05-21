@@ -10,18 +10,14 @@ def thread_http_response(response_status):
 
 
 def thread_fetch_messages_thread_replies(
-    client,
-    bot_token,
-    user_id,
-    channels_list,
-    days_selected,
+    client, bot_token, user_id, channels_list, start_date, end_date, query_asked
 ):
     view_publish(
         client=client,
         user_id=user_id,
         block_id="app_home_get_summary",
         updated_data=fetch_messages_thread_replies(
-            client, bot_token, user_id, channels_list, days_selected
+            client, bot_token, user_id, channels_list, start_date, end_date, query_asked
         ),
     )
 
@@ -40,7 +36,9 @@ def thread_fetch_summary_query(client, user_id, conversation_data, user_query, b
     )
 
 
-def handle_summary_creation(client, bot_token, user_id, channels_list, days_selected):
+def handle_summary_creation(
+    client, bot_token, user_id, channels_list, start_date, end_date, query_asked
+):
     view_publish(
         client=client,
         user_id=user_id,
@@ -55,7 +53,9 @@ def handle_summary_creation(client, bot_token, user_id, channels_list, days_sele
             bot_token,
             user_id,
             channels_list,
-            days_selected,
+            start_date,
+            end_date,
+            query_asked
         ],
     )
     t1.start()
@@ -75,7 +75,12 @@ def handle_summary_query(client, user_id, conversation_data, user_query, blocks)
         ],
     )
     t1.start()
-    
-    view_publish(client=client, user_id=user_id, block_id="replace_last_block_with_loading", updated_data=blocks)
-    
+
+    view_publish(
+        client=client,
+        user_id=user_id,
+        block_id="replace_last_block_with_loading",
+        updated_data=blocks,
+    )
+
     t2.start()

@@ -130,7 +130,7 @@ def remove_save_me_and_text_input_block(blocks):
             elements = block.get("elements", [])
             if any(
                 el.get("type") == "button"
-                and el.get("text", {}).get("text") == "📩 Save me"
+                and el.get("value") in ["saveSummary", "mailSummary"]
                 for el in elements
             ):
                 continue

@@ -1,6 +1,7 @@
-from simplyfox.send_mail import send_email
+from simplyfox.slack_utils.slack_blocks_data_functions import format_blocks_into_data
+from simplyfox.utils.send_mail import trigger_send_mail_function
 from simplyfox.slack_utils.slack_get_functions import get_user_info
-from simplyfox.day_functions import valid_start_end_date
+from simplyfox.utils.day_functions import valid_start_end_date
 from simplyfox.slack_utils.slack_block_functions import remove_save_me_and_text_input_block
 from simplyfox.slack_utils.slack_post_message import post_slack_block_message
 from simplyfox.slack_utils.slack_view_publish import view_publish
@@ -46,8 +47,7 @@ def button_save_summary(client, user_id, data):
 def button_mail_summary(client, user_id, data):
     user_info = get_user_info(client=client, user_id=user_id)
     if user_email := user_info["user"]["profile"]["email"]:
-        print(user_email)
-        send_email(to_email=user_email, subject="Summary", message="this is the message!")
+        trigger_send_mail_function(to_email=user_email, subject="Your Summary - SimplyFox 🦊", message=format_blocks_into_data(client=client, block_data=data))
 
 
 def fetch_user_query(client, user_id, conversation_data, user_query, blocks):

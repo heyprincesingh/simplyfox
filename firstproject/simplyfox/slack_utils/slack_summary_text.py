@@ -1,6 +1,6 @@
-from simplyfox.generate_ai_summary import generate_ai_query_answer
+from simplyfox.utils.generate_ai_summary import generate_ai_query_answer
 from simplyfox.slack_utils.slack_view_publish import view_publish
-from simplyfox.fetch_messages import fetch_messages_thread_replies
+from simplyfox.slack_utils.slack_fetch_messages import fetch_messages_thread_replies
 import threading
 from django.http import HttpResponse
 

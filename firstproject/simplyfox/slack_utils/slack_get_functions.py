@@ -17,3 +17,6 @@ def get_thread_conversations(client, channel_id, thread_timestamp):
 
 def get_user_info(client, user_id):
     return client.users_info(user=user_id)
+
+def get_channel_info(client, channel_id):
+    return client.conversations_info(channel=channel_id)

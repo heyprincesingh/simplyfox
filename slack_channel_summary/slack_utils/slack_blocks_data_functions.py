@@ -1,4 +1,4 @@
-from slack_summary.slack_utils.slack_get_functions import get_channel_info
+from slack_channel_summary.slack_utils.slack_get_functions import get_channel_info
 import re
 
 def format_data_into_blocks(data, isSlash=False):

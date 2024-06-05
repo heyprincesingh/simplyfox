@@ -1,8 +1,8 @@
-from slack_summary.slack_utils.slack_blocks_data_functions import (
+from slack_channel_summary.slack_utils.slack_blocks_data_functions import (
     replace_heading_lines,
     space_around_newline,
 )
-from slack_summary.utils.llm_model.llm_langchain_instance import get_llm_instance
+from slack_channel_summary.utils.llm_model.llm_langchain_instance import get_llm_instance
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from datetime import datetime

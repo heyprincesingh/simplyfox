@@ -1,11 +1,11 @@
-from slack_summary.slack_utils.slack_unread_functions import handle_unread_summary
-from slack_summary.slack_utils.slack_blocks_data_functions import format_blocks_into_data
-from slack_summary.utils.send_mail import trigger_send_mail_function
-from slack_summary.slack_utils.slack_get_functions import get_user_info
-from slack_summary.utils.day_functions import valid_start_end_date
-from slack_summary.slack_utils.slack_block_functions import remove_save_me_and_text_input_block
-from slack_summary.slack_utils.slack_post_message import post_slack_block_message
-from .slack_summary_text import handle_summary_creation, handle_summary_query
+from slack_channel_summary.slack_utils.slack_unread_functions import handle_unread_summary
+from slack_channel_summary.slack_utils.slack_blocks_data_functions import format_blocks_into_data
+from slack_channel_summary.utils.send_mail import trigger_send_mail_function
+from slack_channel_summary.slack_utils.slack_get_functions import get_user_info
+from slack_channel_summary.utils.day_functions import valid_start_end_date
+from slack_channel_summary.slack_utils.slack_block_functions import remove_save_me_and_text_input_block
+from slack_channel_summary.slack_utils.slack_post_message import post_slack_block_message
+from .slack_channel_summary_text import handle_summary_creation, handle_summary_query
 
 
 def button_get_summary(client, bot_token, user_id, data):
@@ -56,7 +56,7 @@ def button_mail_summary(client, user_id, data):
     if user_email := user_info["user"]["profile"]["email"]:
         trigger_send_mail_function(
             to_email=user_email,
-            subject="Your Summary - slack_summary 🦊",
+            subject="Your Summary - slack_channel_summary 🦊",
             message=format_blocks_into_data(client=client, block_data=data),
         )
 

@@ -2,10 +2,10 @@ from datetime import datetime
 import json
 import logging
 import requests
-from slack_summary.slack_utils.slack_blocks import slack_block
-from slack_summary.slack_utils.slack_post_message import post_slash_error_message
-from slack_summary.slack_utils.slack_fetch_messages import fetch_messages_thread_replies
-from slack_summary.utils.day_functions import convert_date_string_to_unix, validate_date_format
+from slack_channel_summary.slack_utils.slack_blocks import slack_block
+from slack_channel_summary.slack_utils.slack_post_message import post_slash_error_message
+from slack_channel_summary.slack_utils.slack_fetch_messages import fetch_messages_thread_replies
+from slack_channel_summary.utils.day_functions import convert_date_string_to_unix, validate_date_format
 import threading
 
 logger = logging.getLogger(__name__)

@@ -1,4 +1,4 @@
-from slack_summary import shared_data
+from slack_channel_summary import shared_data
 from .slack_view_publish import view_publish
 from slack.errors import SlackApiError
 from dotenv import load_dotenv

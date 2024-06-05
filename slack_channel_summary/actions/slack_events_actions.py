@@ -1,5 +1,5 @@
-from slack_summary.slack_utils.slack_unread_functions import update_channel_unread_ts
-from slack_summary.slack_utils.slack_listeners import home_event
+from slack_channel_summary.slack_utils.slack_unread_functions import update_channel_unread_ts
+from slack_channel_summary.slack_utils.slack_listeners import home_event
 from django.http import HttpResponse, JsonResponse
 import logging
 import json

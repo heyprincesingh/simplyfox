@@ -30,7 +30,7 @@ def send_email(to_email, subject, message):
 
         multipart_msg = MIMEMultipart("alternative")
         multipart_msg["Subject"] = subject
-        multipart_msg["From"] = f"slack_summary <{settings.EMAIL_HOST_USER}>"
+        multipart_msg["From"] = f"slack_channel_summary <{settings.EMAIL_HOST_USER}>"
         multipart_msg["To"] = to_email
 
         text = message

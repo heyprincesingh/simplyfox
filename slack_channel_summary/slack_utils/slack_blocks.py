@@ -1,4 +1,4 @@
-from slack_summary.slack_utils.slack_block_functions import (
+from slack_channel_summary.slack_utils.slack_block_functions import (
     replace_last_block_with_loading,
     update_for_days_selected,
     update_for_query_answers,

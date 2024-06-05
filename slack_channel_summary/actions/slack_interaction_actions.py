@@ -1,4 +1,4 @@
-from slack_summary.slack_utils.slack_actions import (
+from slack_channel_summary.slack_utils.slack_actions import (
     button_get_summary,
     button_get_unread_summary,
     button_mail_summary,
@@ -7,7 +7,7 @@ from slack_summary.slack_utils.slack_actions import (
 )
 from urllib.parse import unquote_plus
 from django.http import HttpResponse
-from slack_summary import shared_data
+from slack_channel_summary import shared_data
 import slack
 import json
 import os

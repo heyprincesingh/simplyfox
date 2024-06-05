@@ -1,7 +1,7 @@
 import json
-from slack_summary.utils.llm_model.langchain_main import langchain_generate_query_answer, langchain_generate_summary
-from slack_summary.slack_utils.slack_blocks_data_functions import format_data_into_blocks
-from slack_summary import shared_data
+from slack_channel_summary.utils.llm_model.langchain_main import langchain_generate_query_answer, langchain_generate_summary
+from slack_channel_summary.slack_utils.slack_blocks_data_functions import format_data_into_blocks
+from slack_channel_summary import shared_data
 from .slack_get_functions import (
     get_channel_conversation,
     get_thread_conversations,

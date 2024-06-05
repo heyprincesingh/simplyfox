@@ -1,4 +1,4 @@
-from slack_summary.utils.day_functions import adjust_unix_date_to_today
+from slack_channel_summary.utils.day_functions import adjust_unix_date_to_today
 
 
 def get_user_name(client, user_id):

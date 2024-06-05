@@ -1,4 +1,4 @@
-from slack_summary.slack_utils.slack_slash_functions import slash_summarize_query
+from slack_channel_summary.slack_utils.slack_slash_functions import slash_summarize_query
 from django.http import HttpResponse
 from urllib.parse import parse_qs
 import logging

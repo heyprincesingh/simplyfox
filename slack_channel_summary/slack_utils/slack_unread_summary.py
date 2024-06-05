@@ -1,7 +1,7 @@
-from slack_summary.slack_utils.slack_get_functions import get_channel_conversation
-from slack_summary.utils.llm_model.langchain_main import langchain_generate_query_answer
-from slack_summary.slack_utils.slack_fetch_messages import fetch_messages_thread_replies
-from slack_summary.slack_utils.slack_view_publish import view_publish
+from slack_channel_summary.slack_utils.slack_get_functions import get_channel_conversation
+from slack_channel_summary.utils.llm_model.langchain_main import langchain_generate_query_answer
+from slack_channel_summary.slack_utils.slack_fetch_messages import fetch_messages_thread_replies
+from slack_channel_summary.slack_utils.slack_view_publish import view_publish
 from django.http import HttpResponse
 import threading
 import logging

@@ -1,13 +1,10 @@
-from slack_summary.actions.slack_interaction_actions import SlackInteractionHandler
-from slack_summary.actions.slack_events_actions import SlackEventsHandler
-from slack_summary.actions.slack_slash_actions import SlackSlashActions
+from slack_channel_summary.actions.slack_interaction_actions import SlackInteractionHandler
+from slack_channel_summary.actions.slack_events_actions import SlackEventsHandler
+from slack_channel_summary.actions.slack_slash_actions import SlackSlashActions
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-from dotenv import load_dotenv
 from django.views import View
-
-load_dotenv()
 
 @method_decorator(csrf_exempt, name='dispatch')
 class SlackSummaryView(View):

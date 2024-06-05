@@ -1,6 +1,6 @@
-from slack_summary.slack_utils.slack_unread_summary import handle_unread_summary_creation
-from slack_summary.slack_utils.slack_get_functions import fetch_user_channels_list, get_channel_info
-# from slack_summary.utils.db_utils import fetch_last_text_ts, update_channel_ts
+from slack_channel_summary.slack_utils.slack_unread_summary import handle_unread_summary_creation
+from slack_channel_summary.slack_utils.slack_get_functions import fetch_user_channels_list, get_channel_info
+# from slack_channel_summary.utils.db_utils import fetch_last_text_ts, update_channel_ts
 
 def update_channel_unread_ts(data):
     team_id = data.get("team_id")

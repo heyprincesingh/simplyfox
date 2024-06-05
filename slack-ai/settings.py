@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'slack_summary',
+    'slack_channel_summary',
 ]
 
 MIDDLEWARE = [
@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'slack_summary.middleware.middleware.SlackValidate',
+    'slack_channel_summary.middleware.middleware.SlackValidate',
 ]
 
 ROOT_URLCONF = 'slack-ai.urls'

@@ -3,14 +3,13 @@
 This Django project provides a system to summarize Slack conversations, including important mentions and topic summaries. The project leverages LangChain and various utility functions to generate summaries from Slack data.
 
 ## Tech Stacks:
-![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
-![Python](https://img.shields.io/badge/python-%2307405e.svg?style=for-the-badge&logo=python&logoColor=white&color=blue)
-![Slack](https://img.shields.io/badge/slack-%23092E20.svg?style=for-the-badge&logo=slack&logoColor=white&color=purple)
-![Docker](https://img.shields.io/badge/docker-%238511FA.svg?style=for-the-badge&logo=docker&logoColor=white&color=darkblue)
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![Python](https://img.shields.io/badge/python-%2307405e.svg?style=for-the-badge&logo=python&logoColor=white&color=blue) ![Slack](https://img.shields.io/badge/slack-%23092E20.svg?style=for-the-badge&logo=slack&logoColor=white&color=purple) ![Docker](https://img.shields.io/badge/docker-%238511FA.svg?style=for-the-badge&logo=docker&logoColor=white&color=darkblue)
 
 ## Table of Contents
 
 - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps](#steps)
 - [Configuration](#configuration)
   - [Slack API Token](#slack-api-token)
   - [Google Generative AI API Key](#google-generative-ai-api-key)
@@ -20,8 +19,9 @@ This Django project provides a system to summarize Slack conversations, includin
   - [Step 1: Set Up a Slack App](#step-1-set-up-a-slack-app)
   - [Step 2: Add Manifest File Data](#step-2-add-manifest-file-data)
   - [Step 3: Install the App](#step-3-install-the-app)
-  - [Updating Slack App Manifest](#updating-slack-app-manifest)
-  - [Additional Resources](#additional-resources)
+- [Slack App Manifest Update Guide](#slack-app-manifest-update-guide)
+  - [Update Slack App Manifest](#update-slack-app-manifest)
+  - [Additional steps and Resources](#additional-steps-and-resources)
 
 ## Installation
 
@@ -113,42 +113,71 @@ This guide will walk you through the process of setting up a Slack app, adding t
 ### Step 1: Set Up a Slack App
 
 1. Visit the [Slack App Quickstart Guide](https://api.slack.com/quickstart) to create a new Slack app.
-2. Follow the instructions to set up your app. This will include:
-   - Naming your app
-   - Selecting the workspace where you want to install the app
+2. Follow the instructions to set up your app, including naming your app and selecting the workspace for installation.
 
 ### Step 2: Add Manifest File Data
 
-1. After creating your app, go to the "App Manifest" section in the Slack API console.
-2. Copy the content of app_manifest.yaml file `Provided separately in repository` and paste it into the app manifest editor `yaml section` in the console.
+1. Go to the "App Manifest" section in the Slack API console.
+2. Copy the content of app_manifest.yaml (provided separately in the repository) and paste it into the manifest editor.
 
 ### Step 3: Install the App
 
-1. Once the manifest data is added, navigate to the "Install App" section in the Slack API console.
-2. Click the "Install App to Workspace" button and follow the prompts to authorize the app in your workspace.
+1. Navigate to the "Install App" section in the Slack API console.
+2. Click "Install App to Workspace" and follow the prompts to authorize the app.
 
 Congratulations! Your Slack app should now be installed and ready to use.
 
-### Slack App Manifest Update Guide
-
-This guide will walk you through setting up Ngrok and replacing the URL in your Slack app manifest with your Ngrok URL.
-
+## Slack App Manifest Update Guide
+This guide will walk you through replacing the URL in your Slack app manifest with your server URL.
 
 ### Update Slack App Manifest
 
-Once you have your Ngrok URL, follow these steps to update the URL in your Slack app manifest:
+Get your server URL, and follow these steps to update the URL in your Slack app manifest:
 
 1. **Access Slack App Manifest**: Go to the "App Manifest" section in the Slack API console for your app.
 
 2. **Update URL Field**: In the manifest editor, find the field related to the URL of your app. This could be the `redirect_urls` field.
 
-3. **Replace URL**: Replace the existing URL with your Ngrok URL that you copied earlier.
+3. **Replace URL**: Replace the existing URLs with your server URL that you had.
 
 4. **Save Changes**: After updating the URL, save the changes to the manifest.
 
 ### Additional steps and Resources
 
-Remember to restart your Django server after updating the Ngrok URL to ensure that it's using the new URL for any necessary callbacks or requests.
+Remember to restart your Django server after updating the server URL to ensure that it's using the new URL for any necessary callbacks or requests.
 
-For more detailed instructions and additional features, refer to the [Slack API Documentation](https://api.slack.com).
-For more information on Ngrok, visit the [Ngrok documentation](https://ngrok.com/docs).
+For more detailed instructions and additional features, refer to the [Slack API Documentation](https://api.slack).
+
+
+## API Endpoints
+
+The application provides the following endpoints:
+
+`/slack_summary`
+- **Method:** POST
+- **Description:** Handles Slack slash commands.
+- **View:** `SlackSummaryView`
+- **Handler:** `SlackSlashActions`
+
+`/eventsubs`
+- **Method:** POST
+- **Description:** Handles Slack events.
+- **View:** `SlackEventsView`
+- **Handler:** `SlackEventsHandler`
+
+`/userinteraction`
+- **Method:** POST
+- **Description:** Handles user interactions within Slack.
+- **View:** `SlackUserInteractionView`
+- **Handler:** `SlackInteractionHandler`
+
+## Views
+
+### SlackSummaryView
+- **Description:** Handles incoming Slack slash commands and processes them using `SlackSlashActions`.
+
+### SlackUserInteractionView
+- **Description:** Handles user interactions (e.g., button clicks, dialog submissions) in Slack and processes them using `SlackInteractionHandler`.
+
+### SlackEventsView
+- **Description:** Handles Slack events (e.g., message events, reaction events) and processes them using `SlackEventsHandler`.
